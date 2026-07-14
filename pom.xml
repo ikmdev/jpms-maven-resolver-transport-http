@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>dev.ikm.build</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.64.0</version>
+        <relativePath></relativePath>
+    </parent>
+
+    <groupId>dev.ikm.jpms</groupId>
+    <artifactId>maven-resolver-transport-http</artifactId>
+    <name>maven-resolver-transport-http</name>
+    <version>2.0.0-alpha-2-r1-SNAPSHOT</version>
+
+    <properties>
+        <!-- change release here-->
+        <core.artifact.version>2.0.0-alpha-2</core.artifact.version>
+        <core.artifact.release>r1</core.artifact.release>
+
+        <!-- transitive dependency versions -->
+        <maven-resolver.version>2.0.20</maven-resolver.version>
+        <slf4j-api.version>2.0.17</slf4j-api.version>
+        <httpclient4.version>4.5.14-r1-SNAPSHOT</httpclient4.version>
+        <httpcore4.version>4.4.16-r1-SNAPSHOT</httpcore4.version>
+        <commons-codec.version>1.16.0-r1-SNAPSHOT</commons-codec.version>
+        <jcl-over-slf4j.version>1.7.36-r1-SNAPSHOT</jcl-over-slf4j.version>
+
+        <maven.moditect.plugin>1.2.2.Final</maven.moditect.plugin>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- transitive dependencies of the repackaged artifact -->
+    <dependencyManagement>
+         <dependencies>
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-api</artifactId>
+                <version>${maven-resolver.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-spi</artifactId>
+                <version>${maven-resolver.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-util</artifactId>
+                <version>${maven-resolver.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>httpclient4</artifactId>
+                <version>${httpclient4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>httpcore4</artifactId>
+                <version>${httpcore4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${jcl-over-slf4j.version}</version>
+            </dependency>
+     </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-api</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-spi</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.maven.resolver</groupId>
+                <artifactId>maven-resolver-util</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>httpclient4</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>httpcore4</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>commons-codec</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.ikm.jpms</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+            </dependency>
+     </dependencies>
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/</directory>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.moditect</groupId>
+                    <artifactId>moditect-maven-plugin</artifactId>
+                    <version>${maven.moditect.plugin}</version>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-module-infos</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/moditect</outputDirectory>
+                            <overwriteExistingFiles>true</overwriteExistingFiles>
+                            <modules>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.apache.maven.resolver</groupId>
+                                        <artifactId>maven-resolver-transport-http</artifactId>
+                                        <version>${core.artifact.version}</version>
+                                    </artifact>
+                                    <moduleInfoSource>
+                                        module dev.ikm.jpms.maven.resolver.transport.http {
+                                            requires org.apache.maven.resolver.api;
+                                            requires org.apache.maven.resolver.spi;
+                                            requires org.apache.maven.resolver.util;
+                                            requires dev.ikm.jpms.httpclient;
+                                            requires dev.ikm.jpms.httpcore;
+                                            requires dev.ikm.jpms.commons.codec;
+                                            requires org.slf4j;
+
+                                            exports org.eclipse.aether.transport.http;
+                                        }
+                                    </moduleInfoSource>
+                                </module>
+                            </modules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <target>
+                                <echo message="unzipping file"/>
+                                <unzip src="${project.build.directory}/moditect/maven-resolver-transport-http-${core.artifact.version}.jar"
+                                       dest="${project.build.directory}/classes/"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <id>remove-signature</id>
+                        <configuration>
+                            <target>
+                                <echo message="Deleting .RSA and .SF files"/>
+                                <delete>
+                                    <fileset dir="${project.build.outputDirectory}/META-INF" includes="ECLIPSE_*" />
+                                </delete>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
