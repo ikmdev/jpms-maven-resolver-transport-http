@@ -183,7 +183,7 @@
                                     </artifact>
                                     <moduleInfoSource>
                                         module dev.ikm.jpms.maven.resolver.transport.http {
-                                            requires org.apache.maven.resolver.api;
+                                            requires org.apache.maven.resolver;
                                             requires org.apache.maven.resolver.spi;
                                             requires org.apache.maven.resolver.util;
                                             requires dev.ikm.jpms.httpclient;
